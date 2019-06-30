@@ -1,19 +1,23 @@
 package com.yj.demo;
 
+import com.yj.demo.entity.Login;
 import com.yj.demo.entity.User;
+import com.yj.demo.service.LoginService;
 import com.yj.demo.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
+import java.util.logging.Logger;
 
 @RestController
 public class HelloBootController {
     @Autowired
-
     private UserService userService;
+    @Autowired
+    private LoginService loginService;
     @RequestMapping( value="/api/yj/hello", method = RequestMethod.GET)
 
     public List<User> queryUserAll() {
@@ -22,6 +26,13 @@ public class HelloBootController {
 
         return list;
 
+    }
+    @RequestMapping( value="/api/yj/login", method = RequestMethod.POST)
+    public Map<String, String> selectByPrimaryKey(@RequestBody Login login) {
+        System.out.println(login.toString());
+        System.out.println(login.getUsername());
+        Map<String, String> map= loginService.selectByPrimaryKey(login);
+        return map ;
     }
 //    public List<Map<String, String>> sayHello(){
 //        Map<String,String> map=new HashMap<String,String>();
